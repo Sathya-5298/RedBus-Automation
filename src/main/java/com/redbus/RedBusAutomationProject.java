@@ -2,7 +2,6 @@ package com.redbus;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -25,8 +24,6 @@ public class RedBusAutomationProject {
 		
 		driver.get("https://www.redbus.in/"); // Launching Redbus Web Site
 	//	driver.manage().window().maximize();
-		
-		//Focus on From details
 		
 		By sourceSearchButtonLocator = By.xpath("//div[contains(@class,'inputAndSwapWrapper')]/div[@role=\"button\"]");
 	//	WebElement sourceSearchButtonElement = driver.findElement(sourceSearchButtonLocator);
