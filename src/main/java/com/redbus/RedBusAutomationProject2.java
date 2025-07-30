@@ -2,7 +2,6 @@ package com.redbus;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class RedBusAutomationProject {
+public class RedBusAutomationProject2 {
 
 	public static void main(String[] args) throws InterruptedException 
 	{
@@ -36,50 +35,56 @@ public class RedBusAutomationProject {
 		By searchSugeestionSectionLocator = By.xpath("//div[contains(@class,'searchSuggestionWrapper')]");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(searchSugeestionSectionLocator));
 		
-		locationsSelection(driver, wait, "Hyderabad");
-		locationsSelection(driver, wait, "Vijayawada");
-		
-		By searchButtonLocator = By.xpath("//button[contains(@class,'searchButtonWrapper')]");
-		WebElement searchButton =  wait.until(ExpectedConditions.elementToBeClickable(searchButtonLocator));
-		searchButton.click();
-		
-		By primoButtonLocator = By.xpath("//div[contains(text(),'Primo Bus')]");
-		WebElement primoButton =  wait.until(ExpectedConditions.elementToBeClickable(primoButtonLocator));
-		primoButton.click();
-		
-		By eveningButtonLocator = By.xpath("//div[contains(text(),'18:00-24:00 ')]");
-		WebElement eveningButton =  wait.until(ExpectedConditions.elementToBeClickable(eveningButtonLocator));
-		eveningButton.click();
-		
-		Thread.sleep(2500);
-		
-		By subTitleLocator = By.xpath("//span[contains(@class,'subtitle')]");
-		WebElement subTitle =  null;
-		subTitle =  wait.until(ExpectedConditions.visibilityOfElementLocated(subTitleLocator));
-
-		System.out.println(subTitle.getText());
-	}
-
-	private static void locationsSelection(WebDriver driver, WebDriverWait wait, String cityLocationName) {
 		WebElement searchTextBoxElement = driver.switchTo().activeElement();
-		searchTextBoxElement.sendKeys(cityLocationName);
+		searchTextBoxElement.sendKeys("Hyderabad");
 		
 		By searchCategoryLocator = By.xpath("//div[contains(@class,'searchCategory')]");
 		List<WebElement> searchCategoryList = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(searchCategoryLocator,2));
+		System.out.println(searchCategoryList.size());
 		
 		WebElement locationSearchResult = searchCategoryList.get(0);
 		By locationNameLocator = By.xpath(".//div[contains(@class,'listHeader')]");
 		List<WebElement> locationList = locationSearchResult.findElements(locationNameLocator);
+		System.out.println(locationList.size());
 		
 		for(WebElement location : locationList)
 		{
 			String locationName = location.getText();
 			
-			if(locationName.equalsIgnoreCase(cityLocationName))
+			if(locationName.equalsIgnoreCase("Hyderabad"))
 			{
 				location.click();
 				break;
 			}
 		}
+		
+		//Focus on To details
+		
+		WebElement toTextBoxElement = driver.switchTo().activeElement();
+		toTextBoxElement.sendKeys("Vijayawada");
+		
+		By toSearchCategoryLocator = By.xpath("//div[contains(@class,'searchCategory')]");
+		List<WebElement> toSearchCategoryList = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(toSearchCategoryLocator, 2));
+		System.out.println(toSearchCategoryList.size());
+		
+		WebElement toLocationSearchResult = toSearchCategoryList.get(0);
+		By toLocationNameLocator = By.xpath(".//div[contains(@class,'listHeader')]");
+		List<WebElement> toLocationList = toLocationSearchResult.findElements(toLocationNameLocator);
+		System.out.println(toLocationList.size());
+		
+		for(WebElement toLocation : toLocationList)
+		{
+			String toLocationText = toLocation.getText();
+			
+			if(toLocationText.equalsIgnoreCase("Vijayawada"));
+			{
+				toLocation.click();
+				break;
+			}
+		}
+		
+		
+		
+		
 	}
 }
