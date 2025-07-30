@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -40,6 +41,8 @@ public class RedBusAutomationProject {
 		WebElement searchButton =  wait.until(ExpectedConditions.elementToBeClickable(searchButtonLocator));
 		searchButton.click();
 		
+		
+		
 		By primoButtonLocator = By.xpath("//div[contains(text(),'Primo Bus')]");
 		WebElement primoButton =  wait.until(ExpectedConditions.elementToBeClickable(primoButtonLocator));
 		primoButton.click();
@@ -55,6 +58,23 @@ public class RedBusAutomationProject {
 		subTitle =  wait.until(ExpectedConditions.visibilityOfElementLocated(subTitleLocator));
 
 		System.out.println(subTitle.getText());
+		
+		By busTuppleWrapLocator = By.xpath("//li[contains(@class,'tupleWrapper')] ");
+		By busesNameLocator = By.xpath(".//div[contains(@class,'travelsName')] ");
+		List<WebElement> rowList = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(busTuppleWrapLocator));
+		System.out.println("Total Buses are - " + rowList.size());
+		
+		for(WebElement row: rowList)
+		{
+			System.out.println(row.findElement(busesNameLocator).getText());
+		}
+		
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("arguments[0].scrollIntoView({behaviour:'smooth'})", rowList.get(rowList.size() - 2));
+		
+		List<WebElement> newRowList = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(busTuppleWrapLocator, rowList.size()));
+		System.out.println("Total Buses are - " + newRowList.size());
+		
 	}
 
 	private static void locationsSelection(WebDriver driver, WebDriverWait wait, String cityLocationName) {
