@@ -23,11 +23,10 @@ public class RedBusAutomationProject {
 		
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25L));
 		
-		driver.get("https://www.redbus.in/"); // Launching Redbus Web Site
+		driver.get("https://www.redbus.in/");
 	//	driver.manage().window().maximize();
 		
 		By sourceSearchButtonLocator = By.xpath("//div[contains(@class,'inputAndSwapWrapper')]/div[@role=\"button\"]");
-	//	WebElement sourceSearchButtonElement = driver.findElement(sourceSearchButtonLocator);
 		WebElement sourceSearchButtonElement = wait.until(ExpectedConditions.visibilityOfElementLocated(sourceSearchButtonLocator));
 		sourceSearchButtonElement.click();
 
@@ -41,6 +40,7 @@ public class RedBusAutomationProject {
 		WebElement searchButton =  wait.until(ExpectedConditions.elementToBeClickable(searchButtonLocator));
 		searchButton.click();
 		
+	//	By crossMark //button[contains(@class,'actionButton')]/i
 		
 		
 		By primoButtonLocator = By.xpath("//div[contains(text(),'Primo Bus')]");
@@ -51,7 +51,11 @@ public class RedBusAutomationProject {
 		WebElement eveningButton =  wait.until(ExpectedConditions.elementToBeClickable(eveningButtonLocator));
 		eveningButton.click();
 		
-		Thread.sleep(2500);
+	//	Thread.sleep(2500);
+		
+		By busTuppleWrapLocator = By.xpath("//li[contains(@class,'tupleWrapper')] ");
+		By busesNameLocator = By.xpath(".//div[contains(@class,'travelsName')] ");
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(busTuppleWrapLocator));
 		
 		By subTitleLocator = By.xpath("//span[contains(@class,'subtitle')]");
 		WebElement subTitle =  null;
@@ -59,20 +63,7 @@ public class RedBusAutomationProject {
 
 		System.out.println(subTitle.getText());
 		
-		By busTuppleWrapLocator = By.xpath("//li[contains(@class,'tupleWrapper')] ");
-		By busesNameLocator = By.xpath(".//div[contains(@class,'travelsName')] ");
-	//	List<WebElement> rowList = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(busTuppleWrapLocator));
-		
-	//	for(WebElement row: rowList)
-	//	{
-	//		System.out.println(row.findElement(busesNameLocator).getText());
-	//	}
-		
 		JavascriptExecutor js = (JavascriptExecutor)driver;
-		
-		
-	//	List<WebElement> newRowList = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(busTuppleWrapLocator, rowList.size()));
-	//	System.out.println("Total Buses are - " + newRowList.size());
 		
 		while(true)
 		{
