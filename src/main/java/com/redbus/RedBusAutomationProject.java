@@ -87,6 +87,8 @@ public class RedBusAutomationProject {
 		}
 		
 		System.out.println("Total no of Buses after applying primo and Evening filter: " + rowList.size());
+		
+		driver.close();
 	}
 
 	private static void locationsSelection(WebDriver driver, WebDriverWait wait, String cityLocationName) {
