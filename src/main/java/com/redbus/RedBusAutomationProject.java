@@ -61,20 +61,41 @@ public class RedBusAutomationProject {
 		
 		By busTuppleWrapLocator = By.xpath("//li[contains(@class,'tupleWrapper')] ");
 		By busesNameLocator = By.xpath(".//div[contains(@class,'travelsName')] ");
+	//	List<WebElement> rowList = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(busTuppleWrapLocator));
+		
+	//	for(WebElement row: rowList)
+	//	{
+	//		System.out.println(row.findElement(busesNameLocator).getText());
+	//	}
+		
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		
+		
+	//	List<WebElement> newRowList = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(busTuppleWrapLocator, rowList.size()));
+	//	System.out.println("Total Buses are - " + newRowList.size());
+		
+		while(true)
+		{
+			List<WebElement> rowList = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(busTuppleWrapLocator));
+			List<WebElement> endOfList = driver.findElements(By.xpath("//span[contains(text(),'End of list')]"));   //span[contains(text(),'End of list')]
+			
+			if(!endOfList.isEmpty())
+			{
+				break;
+			}
+			
+			js.executeScript("arguments[0].scrollIntoView({behavior:'smooth'})", rowList.get(rowList.size() - 2));
+		}
+		
 		List<WebElement> rowList = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(busTuppleWrapLocator));
-		System.out.println("Total Buses are - " + rowList.size());
 		
 		for(WebElement row: rowList)
 		{
-			System.out.println(row.findElement(busesNameLocator).getText());
+			String busName = row.findElement(busesNameLocator).getText();
+			System.out.println(busName);
 		}
 		
-		JavascriptExecutor js = (JavascriptExecutor)driver;
-		js.executeScript("arguments[0].scrollIntoView({behaviour:'smooth'})", rowList.get(rowList.size() - 2));
-		
-		List<WebElement> newRowList = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(busTuppleWrapLocator, rowList.size()));
-		System.out.println("Total Buses are - " + newRowList.size());
-		
+		System.out.println("Total no of Buses after applying primo and Evening filter: " + rowList.size());
 	}
 
 	private static void locationsSelection(WebDriver driver, WebDriverWait wait, String cityLocationName) {
