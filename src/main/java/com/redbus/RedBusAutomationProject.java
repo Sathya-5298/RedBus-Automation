@@ -47,14 +47,16 @@ public class RedBusAutomationProject {
 		WebElement primoButton =  wait.until(ExpectedConditions.elementToBeClickable(primoButtonLocator));
 		primoButton.click();
 		
+		By busTuppleWrapLocator = By.xpath("//li[contains(@class,'tupleWrapper')] ");
+		By busesNameLocator = By.xpath(".//div[contains(@class,'travelsName')] ");
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(busTuppleWrapLocator));
+		
 		By eveningButtonLocator = By.xpath("//div[contains(text(),'18:00-24:00 ')]");
 		WebElement eveningButton =  wait.until(ExpectedConditions.elementToBeClickable(eveningButtonLocator));
 		eveningButton.click();
 		
 	//	Thread.sleep(2500);
 		
-		By busTuppleWrapLocator = By.xpath("//li[contains(@class,'tupleWrapper')] ");
-		By busesNameLocator = By.xpath(".//div[contains(@class,'travelsName')] ");
 		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(busTuppleWrapLocator));
 		
 		By subTitleLocator = By.xpath("//span[contains(@class,'subtitle')]");
@@ -88,7 +90,12 @@ public class RedBusAutomationProject {
 		
 		System.out.println("Total no of Buses after applying primo and Evening filter: " + rowList.size());
 		
-		driver.close();
+		String readyState = js.executeScript("return document.readyState").toString();
+
+		if (readyState.equals("complete")) 
+		{
+		    driver.quit();
+		}
 	}
 
 	private static void locationsSelection(WebDriver driver, WebDriverWait wait, String cityLocationName) {
